@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>MetaMask Sign Message</title>
+</head>
+<body>
+    <h1>MetaMask Sign Message Example</h1>
+    <p>Click the button below to sign the "HelloWorld" message using MetaMask:</p>
+    <button onclick="signMessage()">Sign Message</button>
+    <p id="signature"></p>
+    <script>
+    async function signMessage() {
+        if (typeof window.ethereum !== 'undefined') {
+        // Request MetaMask to sign the message
+        const message = "HelloWorld";
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const signature = await ethereum.request({
+            method: 'personal_sign',
+            params: [accounts[0], message],
+        });
+        console.log('Signature:', signature);
+        // Display the signature on the HTML page
+        document.getElementById("signature").textContent = 'Signature: ' + signature;
+        } else {
+        console.error('MetaMask is not installed');
+        }
+    }
+    </script>
+</body>
+</html>
